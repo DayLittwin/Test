@@ -8,11 +8,11 @@ namespace LiarsDice
         static void Main(string[] args)
         {
 
-            Game game;
+            Game game = new Game();
             //First, how many players?
             //Determine by Starting UI 
             //This part is for testing until we get the UI number from Unity 
-            string val;
+            string val = string.Empty;
             Console.WriteLine("How many players?"); //Between 2-4 (2 being 1 computer, 1 human)
             val = Console.ReadLine();
             game.setNumOfPlayers(Convert.ToInt32(val));
