@@ -280,7 +280,7 @@ namespace LiarsDice
                 if (game.getPlayer(game.getTurn()).getNumOfDice() == 0)
                 {
                     game.removePlayer(lastPlayer);
-                    game.setTurn(game.getTurn());
+                    game.setTurn(game.getTurn()); 
                 }
             }
             if (!gameEnd(game))
