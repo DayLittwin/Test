@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace LiarsDice
 
@@ -13,6 +14,7 @@ namespace LiarsDice
         int betNum; //the value shown on the dice/bet
         int turn; //starts at 0 for turn one, goes up to 3
         int totalDice;
+        int SLEEPTIME = 3000;
 
         public Game(int num)
         {
@@ -25,6 +27,11 @@ namespace LiarsDice
             betNum = 0;
             turn = 0;
             totalDice = 0;
+        }
+
+        public void sleep()
+        {
+            Thread.Sleep(SLEEPTIME);
         }
 
         public void setTurn(int turnNum)
@@ -106,7 +113,7 @@ namespace LiarsDice
             }
             else
             {
-                for (int i = spot; i < numOfPlayers; i++)
+                for (int i = spot; i < numOfPlayers - 1; i++)
                 {
                     players[i] = players[i + 1];
                 }

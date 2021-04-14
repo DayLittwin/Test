@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Threading;
 
 namespace LiarsDice
 {
@@ -60,6 +61,8 @@ namespace LiarsDice
             {
                 Console.WriteLine("You lose!");
             }
+
+            game.sleep();
         }
 
         ///<summary>
@@ -88,6 +91,7 @@ namespace LiarsDice
             else
             {
                 computerStart(game, game.getPlayer(game.getTurn()));
+                game.sleep();
             }
             increaseTurn(game);
             continueGame(game);
@@ -136,7 +140,7 @@ namespace LiarsDice
             game.setBetNum(convertedBetNum);
             game.setBetAmt(convertedBetAmt);
 
-            System.Console.WriteLine("Current bet is: At least " + game.getBetAmt() + " \"" + game.getBetNum() + "\"'s.");
+            System.Console.WriteLine("You made the bet of at least " + game.getBetAmt() + " \"" + game.getBetNum() + "\"'s.");
 
         }
 
@@ -162,7 +166,7 @@ namespace LiarsDice
             game.setBetNum(maxNumOfOccurences);
             game.setBetAmt(numOfOccurences[maxNumOfOccurences]);
 
-            System.Console.WriteLine("Current bet is: At least " + game.getBetAmt() + " \"" + game.getBetNum() + "\"'s.");
+            System.Console.WriteLine("Player " + game.getTurn() + " made the bet of at least " + game.getBetAmt() + " \"" + game.getBetNum() + "\"'s.");
         }
 
         ///<summary>
@@ -195,6 +199,7 @@ namespace LiarsDice
             else
             {
                 ai(game);
+                game.sleep();
             }
 
             if (!gameEnd(game))
@@ -247,7 +252,7 @@ namespace LiarsDice
                 game.setBetNum(convertedBetNum);
                 game.setBetAmt(convertedBetAmt);
 
-                System.Console.WriteLine("Current bet is: At least " + game.getBetAmt() + " \"" + game.getBetNum() + "\"'s.");
+                System.Console.WriteLine("You made the bet of at least " + game.getBetAmt() + " \"" + game.getBetNum() + "\"'s.");
             }
 
         }
@@ -293,7 +298,7 @@ namespace LiarsDice
                         game.setBetAmt(game.getBetAmt() + 1);
                     }
                 }
-                System.Console.WriteLine("Current bet is: At least " + game.getBetAmt() + " \"" + game.getBetNum() + "\"'s.");
+                System.Console.WriteLine("Player " + game.getTurn() + " made the bet of at least " + game.getBetAmt() + " \"" + game.getBetNum() + "\"'s.");
             }
             else
             {
@@ -375,7 +380,14 @@ namespace LiarsDice
         /// <param name="game">Contains all information about the game. Is part of class Game.</param>
         static public void challenge(Game game)
         {
-            Console.WriteLine("\nCHALLENGE!");
+            if (game.getPlayer(game.getTurn()).isHuman())
+            {
+                Console.WriteLine("\nYOU ARE CHALLENGING!");
+            }
+            else
+            {
+                Console.WriteLine("\nPlayer " + game.getTurn() + " IS CHALLENGING!");
+            }
 
              for (int i = 0; i < game.getNumOfPlayers(); i++) {
                 if (game.getPlayer(i).isHuman())
@@ -405,9 +417,24 @@ namespace LiarsDice
             if (betNumFnd >= game.getBetAmt())
             {
                 game.getPlayer(game.getTurn()).removeDie();
-                Console.WriteLine("Player " + game.getTurn() + " loses a die!");
+                if (game.getPlayer(game.getTurn()).isHuman())
+                {
+                    Console.WriteLine("You lose a die!\n");
+                }
+                else
+                {
+                    Console.WriteLine("Player " + game.getTurn() + " loses a die!\n");
+                }
                 if (game.getPlayer(game.getTurn()).getNumOfDice() == 0)
                 {
+                    if (game.getPlayer(game.getTurn()).isHuman())
+                    {
+                        Console.WriteLine("You are out of the game!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Player " + game.getTurn() + " is out of the game!");
+                    }
                     game.removePlayer(game.getTurn());
                     game.setTurn(game.getTurn() + 1);
                 }
@@ -419,18 +446,34 @@ namespace LiarsDice
                 {
                     lastPlayer = game.getNumOfPlayers() - 1;
                 }
-                Console.WriteLine("Player " + lastPlayer + " loses a die!");
-                game.getPlayer(lastPlayer).removeDie();
-                if (game.getPlayer(game.getTurn()).getNumOfDice() == 0)
+                if (game.getPlayer(lastPlayer).isHuman())
                 {
+                    Console.WriteLine("You lose a die!\n");
+                }
+                else
+                {
+                    Console.WriteLine("Player " + lastPlayer + " loses a die!\n");
+                }
+                game.getPlayer(lastPlayer).removeDie();
+                if (game.getPlayer(lastPlayer).getNumOfDice() == 0)
+                {
+                    if (game.getPlayer(lastPlayer).isHuman())
+                    {
+                        Console.WriteLine("You are out of the game!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Player " + lastPlayer + " is out of the game!");
+                    }
                     game.removePlayer(lastPlayer);
-                    game.setTurn(game.getTurn()); 
+                    game.setTurn(game.getTurn()+1); 
                 }
             }
             if (!gameEnd(game))
             {
                 game.setBetAmt(0);
                 game.setBetNum(0);
+                game.sleep();
                 startRound(game);
             }
         }
