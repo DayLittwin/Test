@@ -14,14 +14,15 @@ namespace LiarsDice
         int betNum; //the value shown on the dice/bet
         int turn; //starts at 0 for turn one, goes up to 3
         int totalDice;
-        int SLEEPTIME = 3000;
+        static int SLEEPTIME = 2500;
+        static int NAPTIME = 1500;
 
         public Game(int num)
         {
             numOfPlayers = num;
             for (int i = 0; i < numOfPlayers; i++)
             {
-                players[i] = new Player();
+                players[i] = new Player(i+1);
             }
             betAmt = 0;
             betNum = 0;
@@ -32,6 +33,11 @@ namespace LiarsDice
         public void sleep()
         {
             Thread.Sleep(SLEEPTIME);
+        }
+
+        public void nap()
+        {
+            Thread.Sleep(NAPTIME);
         }
 
         public void setTurn(int turnNum)

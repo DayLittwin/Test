@@ -9,6 +9,7 @@ namespace LiarsDice
         int[] dice = new int[5];
         bool human;
         int numOfDice;
+        int playerNumber;
 
         public Player()
         {
@@ -18,6 +19,22 @@ namespace LiarsDice
             }
             human = false;
             numOfDice = 5;
+        }
+
+        public Player(int num)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                dice[i] = 0;
+            }
+            human = false;
+            numOfDice = 5;
+            playerNumber = num;
+        }
+
+        public int getPlayerNumber()
+        {
+            return playerNumber;
         }
 
         public void setHuman()
