@@ -8,11 +8,24 @@ namespace LiarsDice
     class Game
     {
         Player[] players = new Player[4];
-        int numOfPlayers = 0;
-        int betAmt = 0; //the countable instances of the bet
-        int betNum = 0; //the value shown on the dice/bet
-        int turn = 0; //starts at 0 for turn one, goes up to 3
-        int totalDice = 0;
+        int numOfPlayers;
+        int betAmt; //the countable instances of the bet
+        int betNum; //the value shown on the dice/bet
+        int turn; //starts at 0 for turn one, goes up to 3
+        int totalDice;
+
+        public Game()
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                players[i] = new Player();
+            }
+            numOfPlayers = 0;
+            betAmt = 0;
+            betNum = 0;
+            turn = 0;
+            totalDice = 0;
+        }
 
         public void setTurn(int turnNum)
         {
@@ -79,7 +92,6 @@ namespace LiarsDice
         }
         public void removePlayer(int spot)
         {
-            numOfPlayers--;
             if (spot == 0)
             {
                 for (int i = 0; i < numOfPlayers; i++)
@@ -100,8 +112,7 @@ namespace LiarsDice
                 }
                 players[numOfPlayers - 1] = null;
             }
+            numOfPlayers--;
         }
-
     }
 }
----

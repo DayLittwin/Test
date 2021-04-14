@@ -7,8 +7,18 @@ namespace LiarsDice
     class Player
     {
         int[] dice = new int[5];
-        bool human = false;
-        int numOfDice = 5;
+        bool human;
+        int numOfDice;
+
+        public Player()
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                dice[i] = 0;
+            }
+            human = false;
+            numOfDice = 5;
+        }
 
         public void setHuman()
         {
