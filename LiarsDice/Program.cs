@@ -46,6 +46,11 @@ namespace LiarsDice
               Next player can then increase amt of dice or val of dice. 
               Human and AI functionality for each will be different.*/
             startRound(game);
+            while (!gameEnd(game))
+            {
+                increaseTurn(game);
+                continueGame(game);
+            }
             endScreen(game);
         }
 
@@ -95,8 +100,6 @@ namespace LiarsDice
                 computerStart(game, game.getPlayer(game.getTurn()));
                 game.sleep();
             }
-            increaseTurn(game);
-            continueGame(game);
         }
 
         ///<summary>
@@ -202,12 +205,6 @@ namespace LiarsDice
             {
                 ai(game);
                 game.sleep();
-            }
-
-            if (!gameEnd(game))
-            {
-                increaseTurn(game);
-                continueGame(game);
             }
         }
 
