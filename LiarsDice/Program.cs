@@ -221,15 +221,33 @@ namespace LiarsDice
             else
             {
                 String inputBetAmt = String.Empty, inputBetNum = String.Empty;
+                int convertedBetAmt = 0, convertedBetNum = 0;
+
                 Console.WriteLine("Please enter a new bet with a higher face or higher amount.");
 
-                Console.Write("Bet Amount: ");
-                inputBetAmt = Console.ReadLine();
-                game.setBetAmt(Convert.ToInt32(inputBetAmt));
+                do
+                {
+                    Console.Write("Bet Amount: ");
+                    inputBetAmt = Console.ReadLine();
+                    Int32.TryParse(inputBetAmt, out convertedBetAmt);
 
-                Console.Write("Bet Number (face): ");
-                inputBetNum = Console.ReadLine();
-                game.setBetNum(Convert.ToInt32(inputBetNum));
+                    Console.Write("Bet Number (face): ");
+                    inputBetNum = Console.ReadLine();
+                    Int32.TryParse(inputBetNum, out convertedBetNum);
+
+                    if (convertedBetNum < 1 || convertedBetNum > 6)
+                    {
+                        Console.WriteLine("ERROR: Please enter a valid integer between 1 and 6 inclusively.");
+                    }
+                    else if (convertedBetNum <= game.getBetNum() && convertedBetAmt <= game.getBetAmt())
+                    {
+                        Console.WriteLine("ERROR: Increase bet num, bet amount, or both.");
+                    }
+
+                } while (convertedBetNum < 1 || convertedBetNum > 6 || (convertedBetNum <= game.getBetNum() && convertedBetAmt <= game.getBetAmt()));
+
+                game.setBetNum(convertedBetNum);
+                game.setBetAmt(convertedBetAmt);
 
                 System.Console.WriteLine("Current bet is: At least " + game.getBetAmt() + " \"" + game.getBetNum() + "\"'s.");
             }
