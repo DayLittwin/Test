@@ -10,8 +10,6 @@ namespace LiarsDice
         ///</summary>
         static void Main(string[] args)
         {
-
-            Game game = new Game();
             //First, how many players?
             //Determine by Starting UI 
             //This part is for testing until we get the UI number from Unity 
@@ -30,7 +28,7 @@ namespace LiarsDice
 
             } while (num < 2 || num > 4);
 
-            game.setNumOfPlayers(num);
+            Game game = new Game(num);
 
             //Determine who goes first by randomly assigning human.
             //Array spot 0 will go first. (EX. If human is 0, human will go first)
@@ -262,7 +260,7 @@ namespace LiarsDice
         {
             //ai(game);
             //check the probablility of the current bet. Is it reasonable?
-            if (probCheck(game, game.getBetAmt(), game.getBetNum()) > 65)
+            if (probCheck(game, game.getBetAmt(), game.getBetNum()) > 50)
             {
                 //higher quantity of the same face (like 9 “3’s” instead of 7 “3’s”) 
                 //same quantity with a higher face (like 7 “4’s” instead of 7 “3’s”).
@@ -377,7 +375,7 @@ namespace LiarsDice
         /// <param name="game">Contains all information about the game. Is part of class Game.</param>
         static public void challenge(Game game)
         {
-            Console.WriteLine("\n CHALLENGE!");
+            Console.WriteLine("\nCHALLENGE!");
 
              for (int i = 0; i < game.getNumOfPlayers(); i++) {
                 if (game.getPlayer(i).isHuman())

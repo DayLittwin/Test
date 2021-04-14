@@ -14,13 +14,13 @@ namespace LiarsDice
         int turn; //starts at 0 for turn one, goes up to 3
         int totalDice;
 
-        public Game()
+        public Game(int num)
         {
-            for (int i = 0; i < 4; i++)
+            numOfPlayers = num;
+            for (int i = 0; i < numOfPlayers; i++)
             {
                 players[i] = new Player();
             }
-            numOfPlayers = 0;
             betAmt = 0;
             betNum = 0;
             turn = 0;
