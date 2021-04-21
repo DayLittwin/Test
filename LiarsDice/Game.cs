@@ -10,8 +10,8 @@ namespace LiarsDice
     {
         Player[] players = new Player[4];
         int numOfPlayers;
-        int betAmt; //the countable instances of the bet
-        int betNum; //the "face" value shown on the dice/bet
+        int betQuantity; //the countable instances of the bet
+        int betFace; //the "face" value shown on the dice/bet
         int turn; //starts at 0 for turn one, goes up to 3
         int totalDice;
         static int SLEEPTIME = 2500;
@@ -28,8 +28,8 @@ namespace LiarsDice
             {
                 players[i] = new Player(i+1);
             }
-            betAmt = 0;
-            betNum = 0;
+            betQuantity = 0;
+            betFace = 0;
             turn = 0;
             totalDice = 0;
         }
@@ -69,21 +69,21 @@ namespace LiarsDice
         }
 
         /// <summary>
-        /// Sets the current betAmt to the amt provided.
+        /// Sets the current betQuantity to the amt provided.
         /// </summary>
-        /// <param name="amt">The new betAmt</param>
-        public void setBetAmt(int amt)
+        /// <param name="amt">The new betQuantity</param>
+        public void setbetQuantity(int amt)
         {
-            betAmt = amt;
+            betQuantity = amt;
         }
 
         /// <summary>
-        /// Sets the current betNum to the num provided.
+        /// Sets the current betFace to the num provided.
         /// </summary>
-        /// <param name="num">The new betNum</param>
-        public void setBetNum(int num)
+        /// <param name="num">The new betFace</param>
+        public void setbetFace(int num)
         {
-            betNum = num;
+            betFace = num;
         }
 
         /// <summary>
@@ -96,21 +96,21 @@ namespace LiarsDice
         }
 
         /// <summary>
-        /// Returns the betAmt
+        /// Returns the betQuantity
         /// </summary>
-        /// <returns>The current betAmt equal to countable instances of a die</returns>
-        public int getBetAmt()
+        /// <returns>The current betQuantity equal to countable instances of a die</returns>
+        public int getbetQuantity()
         {
-            return betAmt;
+            return betQuantity;
         }
 
         /// <summary>
-        /// Returns the betNum
+        /// Returns the betFace
         /// </summary>
-        /// <returns>The current betNum equal to the face of the die</returns>
-        public int getBetNum()
+        /// <returns>The current betFace equal to the face of the die</returns>
+        public int getbetFace()
         {
-            return betNum;
+            return betFace;
         }
 
         /// <summary>
