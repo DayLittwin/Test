@@ -112,13 +112,13 @@ namespace LiarsDice
             String inputbetQuantity = String.Empty, inputbetFace = String.Empty;
             int convertedbetQuantity = 0, convertedbetFace = 0;
 
-            Console.WriteLine("Please enter the face of the dice you're betting and the amount of that face.");
+            Console.WriteLine("Please enter your new bet.");
 
             //Get the user's new bet. 
             //Make sure the user does not input an invalid entry.
             do
             {
-                Console.Write("Bet Amount: ");
+                Console.Write("The quantity of dice in your bet: ");
                 inputbetQuantity = Console.ReadLine();
                 Int32.TryParse(inputbetQuantity, out convertedbetQuantity);
 
@@ -131,7 +131,7 @@ namespace LiarsDice
 
             do
             {
-                Console.Write("Bet Number (face): ");
+                Console.Write("The face of the dice in your bet: ");
                 inputbetFace = Console.ReadLine();
                 Int32.TryParse(inputbetFace, out convertedbetFace);
                 
@@ -241,17 +241,17 @@ namespace LiarsDice
                 String inputbetQuantity = String.Empty, inputbetFace = String.Empty;
                 int convertedbetQuantity = 0, convertedbetFace = 0;
 
-                Console.WriteLine("Please enter a new bet with a higher face or higher amount.");
+                Console.WriteLine("Please enter your new bet.");
 
                 //Get the new bet from the user.
                 //Make sure the user does not input an invalid entry.
                 do
                 {
-                    Console.Write("Bet Amount: ");
+                    Console.Write("The quantity of dice in your bet: ");
                     inputbetQuantity = Console.ReadLine();
                     Int32.TryParse(inputbetQuantity, out convertedbetQuantity);
 
-                    Console.Write("Bet Number (face): ");
+                    Console.Write("The face of the dice in your bet: ");
                     inputbetFace = Console.ReadLine();
                     Int32.TryParse(inputbetFace, out convertedbetFace);
 
