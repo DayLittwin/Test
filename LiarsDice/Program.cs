@@ -285,37 +285,36 @@ namespace LiarsDice
             //If the probability is greater than 50%, then the ai will make a new bet.
             if (probCheck(game, game.getbetQuantity(), game.getbetFace()) > 50)
             {
-                //higher quantity of the same face (like 9 “3’s” instead of 7 “3’s”) 
-                //same quantity with a higher face (like 7 “4’s” instead of 7 “3’s”).
-                //Determine the amount of the betFace the current player has.
-                int betQuantityFnd = 0;
+                //Find which face current player has the most of.
+                //If the current player has equal amounts, increase the current bet?
+                //Choose the highest numbers with the most amount of instances
+                int[] numOfOccurences = new int[7];
+                int maxNumOfOccurences = game.getPlayer(game.getTurn()).getDice(0);
+
                 for (int i = 0; i < game.getPlayer(game.getTurn()).getNumOfDice(); i++)
                 {
-                    if (game.getPlayer(game.getTurn()).getDice(i) == game.getbetFace())
+                    numOfOccurences[game.getPlayer(game.getTurn()).getDice(i)]++;
+                    if (numOfOccurences[game.getPlayer(game.getTurn()).getDice(i)] >= maxNumOfOccurences)
                     {
-                        betQuantityFnd++;
+                        maxNumOfOccurences = game.getPlayer(game.getTurn()).getDice(i);
                     }
                 }
 
-                //The current player has more of the current betQuantity in his hand.
-                if (game.getbetQuantity() < betQuantityFnd && game.getbetQuantity() + 1 < game.getTotalDice())
+                //The maxNumOfOccurences is equal to the current betFace
+                if (maxNumOfOccurences == game.getbetFace() && game.getbetQuantity() < game.getTotalDice())
                 {
                     game.setbetQuantity(game.getbetQuantity() + 1);
                 }
-                //The current betQuantity is more than the amount of totalDice.
-                else if (game.getbetQuantity() > game.getTotalDice())
+                //The maxNumOfOccurences is less than the current betFace 
+                else if (maxNumOfOccurences < game.getbetFace() && game.getbetQuantity() < game.getTotalDice())
                 {
-                    challenge(game);
+                    game.setbetFace(maxNumOfOccurences);
+                    game.setbetQuantity(game.getbetQuantity() + 1);
                 }
-                //The probabilitly for increasing the betQuantity is less than the probability of increasing the betFace.
-                else if (probCheck(game, game.getbetQuantity() + 1, game.getbetFace()) < probCheck(game, game.getbetQuantity(), game.getbetFace() + 1) && game.getbetFace() != 6)
+                //The maxNumOfOccurences is greater than the current betFace
+                else if (game.getbetFace() <= 6)
                 {
                     game.setbetFace(game.getbetFace() + 1);
-                }
-                //The probability for increasing the betFace is less than the probability of increasing the betQuantity.
-                else
-                {
-                    game.setbetQuantity(game.getbetQuantity() + 1);
                 }
 
                 //Display new bet.
