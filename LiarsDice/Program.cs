@@ -380,7 +380,7 @@ namespace LiarsDice
             double q = 1 - p;
             while (r < n)
             {
-                answer = C(n,r) * Math.Pow(p, r) * Math.Pow(q, (n - r));
+                answer += C(n,r) * Math.Pow(p, r) * Math.Pow(q, (n - r));
             }
 
             return answer;
