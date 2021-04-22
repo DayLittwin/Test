@@ -362,7 +362,7 @@ namespace LiarsDice
             int n = game.getTotalDice() - numFound;
 
             //Multiplies the binomialDistribution by 100 to get the percent.
-            return 100 * binomialDistribution(r, n);
+            return 100 * binomialDistribution(Convert.ToDouble(r), Convert.ToDouble(n));
         }
 
         /// <summary>
@@ -373,10 +373,10 @@ namespace LiarsDice
         /// <param name="n">Numbers of trials. This is equal to the quantity of dice that needs to be found, minus the amount of said die our
         /// current player has. </param>
         /// <returns>A decimal probability.</returns>
-        static public double binomialDistribution(int r, int n)
+        static public double binomialDistribution(double r, double n)
         {
             double answer = 0;
-            double p = 1 / 6;
+            double p = 0.16666666666;
             double q = 1 - p;
             while (r < n)
             {
@@ -393,7 +393,7 @@ namespace LiarsDice
         /// <param name="n">Number of items in the set.</param>
         /// <param name="r">Number of items selected from the set.</param>
         /// <returns></returns>
-        static public double C(int n, int r)
+        static public double C(double n, double r)
         {
             return (factorial(n) / (factorial(r) * (factorial(n - r))));
         }
@@ -403,9 +403,9 @@ namespace LiarsDice
         /// </summary>
         /// <param name="num">The number that needs it's factorial calculated</param>
         /// <returns>Returns the factorial</returns>
-        static public int factorial(int num)
+        static public double factorial(double num)
         {
-            int result = 1;
+            double result = 1;
             while (num != 1)
             {
                 result *= num;
