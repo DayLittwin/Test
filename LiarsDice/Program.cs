@@ -285,8 +285,8 @@ namespace LiarsDice
         /// <param name="game">Contains all information about the game. Is part of class Game.</param>
         static void ai(Game game)
         {
-            //If the probability is greater than 50%, then the ai will make a new bet.
-            if (probCheck(game, game.getbetQuantity(), game.getbetFace()) > 50)
+            //If the probability is greater than 60%, then the ai will make a new bet.
+            if (probCheck(game, game.getbetQuantity(), game.getbetFace()) > 60)
             {
                 //Find which face current player has the most of.
                 //If the current player has equal amounts, increase the current bet?
@@ -304,18 +304,18 @@ namespace LiarsDice
                 }
 
                 //The maxNumOfOccurences is equal to the current betFace
-                if (maxNumOfOccurences == game.getbetFace() && game.getbetQuantity() < game.getTotalDice())
+                if (maxNumOfOccurences == game.getbetFace() && game.getbetQuantity() + 1 < game.getTotalDice())
                 {
                     game.setbetQuantity(game.getbetQuantity() + 1);
                 }
                 //The maxNumOfOccurences is less than the current betFace 
-                else if (maxNumOfOccurences < game.getbetFace() && game.getbetQuantity() < game.getTotalDice())
+                else if (maxNumOfOccurences < game.getbetFace() && game.getbetQuantity() + 1 < game.getTotalDice())
                 {
                     game.setbetFace(maxNumOfOccurences);
                     game.setbetQuantity(game.getbetQuantity() + 1);
                 }
                 //The maxNumOfOccurences is greater than the current betFace
-                else if (game.getbetFace() <= 6)
+                else if (game.getbetFace() + 1 <= 6)
                 {
                     game.setbetFace(game.getbetFace() + 1);
                 }
@@ -324,7 +324,7 @@ namespace LiarsDice
                 System.Console.WriteLine("Player " + game.getPlayer(game.getTurn()).getPlayerNumber() + " made the bet of at least " + game.getbetQuantity() + " \"" + game.getbetFace() + "\"'s.");
             }
 
-            //If the probabililty is less than 50%, then the ai will challenge.
+            //If the probabililty is less than 60%, then the ai will challenge.
             else
             {
                 challenge(game);
