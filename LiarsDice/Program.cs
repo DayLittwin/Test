@@ -62,6 +62,12 @@ namespace LiarsDice
             else
             {
                 Console.WriteLine("You lose!");
+
+                //If the player had earlier decided to leave the game without seeing the outcome, it will not show who won.
+                if (game.getNumOfPlayers() != -1)
+                {
+                    Console.WriteLine("Player " + game.getPlayer(0).getPlayerNumber() + " wins!");
+                }
             }
 
             game.sleep();
@@ -93,9 +99,6 @@ namespace LiarsDice
             else
             {
                 computerStart(game, game.getPlayer(game.getTurn()));
-
-                //sleeps for a short period of time, allowing the human to understand information presented.
-                game.sleep();
             }
         }
 
@@ -423,6 +426,8 @@ namespace LiarsDice
         /// <param name="game">Contains all information about the game. Is part of class Game.</param>
         static public void challenge(Game game)
         {
+            String input = String.Empty;
+
             //Display who is challenging.
             if (game.getPlayer(game.getTurn()).isHuman())
             {
@@ -446,6 +451,8 @@ namespace LiarsDice
                 showDice(game.getPlayer(i));
                 game.nap();
              }
+
+            Console.WriteLine();
 
             //Count each instance of game.betFace in each player.
             int betFaceFnd = 0;
@@ -482,16 +489,30 @@ namespace LiarsDice
                     //Displays the user who is out of the game.
                     if (game.getPlayer(game.getTurn()).isHuman())
                     {
-                        Console.WriteLine("You are out of the game!");
+                        Console.WriteLine("You are out of the game!\n");
+
+                        //If there is more than 1 player left after removing human player, ask if the player wants to watch 
+                        //the ai finish the game.
+                        if (game.getNumOfPlayers() - 1 > 1)
+                        {
+                            do
+                            {
+                                Console.WriteLine("Do you want to watch the rest of the game? (Y/N): ");
+                                input = Console.ReadLine().ToLower();
+                                if (input != "y" && input != "n")
+                                {
+                                    Console.WriteLine("ERROR: Input must be either Y or N, Non-case sensitive.");
+                                }
+                            } while (input != "y" && input != "n");
+                        }
                     }
                     else
                     {
-                        Console.WriteLine("Player " + game.getPlayer(game.getTurn()).getPlayerNumber() + " is out of the game!");
+                        Console.WriteLine("Player " + game.getPlayer(game.getTurn()).getPlayerNumber() + " is out of the game!\n");
                     }
 
-                    //Removes player who is out of the game, then sets the new turn.
+                    //Removes player who is out of the game.
                     game.removePlayer(game.getTurn());
-                    game.setTurn(game.getTurn() + 1);
                 }
             }
 
@@ -523,19 +544,36 @@ namespace LiarsDice
                     //Display who is out of the game.
                     if (game.getPlayer(lastPlayer).isHuman())
                     {
-                        Console.WriteLine("You are out of the game!");
+                        Console.WriteLine("You are out of the game!\n");
+
+                        //If there is more than 1 player left after removing human player, ask if the player wants to watch 
+                        //the ai finish the game.
+                        if (game.getNumOfPlayers() - 1 > 1)
+                        {
+                            do
+                            {
+                                Console.WriteLine("Do you want to watch the rest of the game? (Y/N): ");
+                                input = Console.ReadLine().ToLower();
+                                if (input != "y" && input != "n")
+                                {
+                                    Console.WriteLine("ERROR: Input must be either Y or N, Non-case sensitive.");
+                                }
+                            } while (input != "y" && input != "n");
+                        }
                     }
                     else
                     {
-                        Console.WriteLine("Player " + game.getPlayer(lastPlayer).getPlayerNumber() + " is out of the game!");
+                        Console.WriteLine("Player " + game.getPlayer(lastPlayer).getPlayerNumber() + " is out of the game!\n");
                     }
 
                     //Remove the player.
                     game.removePlayer(lastPlayer);
-
-                    //Increase the turn.
-                    game.setTurn(game.getTurn()+1); 
                 }
+            }
+
+            if (input == "n")
+            {
+                forceEnd(game);
             }
 
             //If we're not at the end of the game, we reset the betQuantity and betFace before starting a new round.
@@ -543,8 +581,22 @@ namespace LiarsDice
             {
                 game.setbetQuantity(0);
                 game.setbetFace(0);
+                if (game.getTurn() >= game.getNumOfPlayers())
+                {
+                    game.setTurn(game.getTurn() - 1);
+                }
                 startRound(game);
             }
+        }
+
+        /// <summary>
+        /// If the player doesn't want to watch the rest of the game after losing, this will make the game immediately end without
+        /// seeing the outcome.
+        /// </summary>
+        /// <param name="game">Contains all information about the game. Is part of class Game.</param>
+        static public void forceEnd(Game game)
+        {
+            game.setNumOfPlayers(-1);
         }
 
         /// <summary>

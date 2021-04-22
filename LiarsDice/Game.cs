@@ -95,6 +95,11 @@ namespace LiarsDice
             return numOfPlayers;
         }
 
+        public void setNumOfPlayers(int num)
+        {
+            numOfPlayers = num;
+        }
+
         /// <summary>
         /// Returns the betQuantity
         /// </summary>
@@ -160,7 +165,7 @@ namespace LiarsDice
         {
             if (spot == 0)
             {
-                for (int i = 0; i < numOfPlayers; i++)
+                for (int i = 0; i < numOfPlayers - 1; i++)
                 {
                     players[i] = players[i + 1];
                 }

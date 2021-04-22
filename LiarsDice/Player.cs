@@ -51,7 +51,7 @@ namespace LiarsDice
             Random rnd = new Random();
             for (int i = 0; i < 5; i++)
             {
-                dice[i] = rnd.Next(1, 6);
+                dice[i] = rnd.Next(1, 7);
             }
         }
 
