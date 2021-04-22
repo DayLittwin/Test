@@ -381,6 +381,7 @@ namespace LiarsDice
             while (r < n)
             {
                 answer += C(n,r) * Math.Pow(p, r) * Math.Pow(q, (n - r));
+                r++;
             }
 
             return answer;

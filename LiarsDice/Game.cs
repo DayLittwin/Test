@@ -31,7 +31,7 @@ namespace LiarsDice
             betQuantity = 0;
             betFace = 0;
             turn = 0;
-            totalDice = 0;
+            totalDice = numOfPlayers*5;
         }
 
         /// <summary>
