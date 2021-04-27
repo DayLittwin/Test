@@ -4,7 +4,7 @@ using System.Threading;
 
 namespace LiarsDice
 {
-    class Program
+    public class Program
     {
         ///<summary>
         ///The main program for Liar's Dice

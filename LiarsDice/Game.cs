@@ -6,7 +6,7 @@ using System.Threading;
 namespace LiarsDice
 
 {
-    class Game
+    public class Game
     {
         Player[] players = new Player[4];
         int numOfPlayers;

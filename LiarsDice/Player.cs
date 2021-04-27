@@ -4,7 +4,7 @@ using System.Text;
 
 namespace LiarsDice
 {
-    class Player
+    public class Player
     {
         int[] dice = new int[5];
         bool human;
