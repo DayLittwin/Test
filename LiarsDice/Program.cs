@@ -51,6 +51,8 @@ namespace LiarsDice
 
         /// <summary>
         /// Outputs "You win!" or "You lose!" depending on if the last player is the human player.
+        /// If the player had earlier decided to leave the game early without seeing the outcome, it will not display which AI won.
+        /// However, if the player decided to watch the game to completion, it will display which Player (AI) won.
         /// </summary>
         /// <param name="game">Contains all information about the game. Is part of class Game.</param>
         static public void endScreen(Game game)
@@ -74,7 +76,7 @@ namespace LiarsDice
         }
 
         ///<summary>
-        ///Rolls the dice for each player.
+        ///Randomizes each player's dice as a face between 1 and 6, inclusively.
         ///</summary>
         /// <param name="game">Contains all information about the game. Is part of class Game.</param>
         static public void rollDice(Game game)
@@ -86,7 +88,10 @@ namespace LiarsDice
         }
 
         ///<summary>
-        ///Starts the round of the game, specifying a new bet.
+        ///Starts the round of the game which specifies a new bet.
+        ///First, it will roll the dice of each player, calling rollDice.
+        ///If the current player's human value is set to true, it will continue to humanStart.
+        ///Otherwise, it will continue to computerStart.
         ///</summary>
         /// <param name="game">Contains all information about the game. Is part of class Game.</param>
         static public void startRound(Game game)
@@ -103,7 +108,12 @@ namespace LiarsDice
         }
 
         ///<summary>
-        ///The human starts the round by making a bet.
+        ///The human starts the round by making a new bet.
+        ///First, it will display the player's dice.
+        ///Next, it will ask for the user's new bet as the quantity of dice in the bet, and the face of the bet. 
+        ///It will bug check to make sure the entry is valid, only numerals greater than zeroand nothing outside of 6 faces.
+        ///Then, it will set the current betQuantity and betFace. 
+        ///Lastly, it displays the new bet.
         ///</summary>
         /// <param name="game">Contains all information about the game. Is part of class Game.</param>
         static public void humanStart(Game game)
@@ -156,6 +166,10 @@ namespace LiarsDice
 
         /// <summary>
         /// The computer starts the round by making a bet.
+        /// First, it will determine which face has the most number of occurences within the current player's dice, preferring higher faces.
+        /// The variable maxNumOfOccurences is the highest face of the most occurences.
+        /// It will then set the new betFace to maxNumOfOccurences, and betQuantity to how many of that face were found in the player's dice.
+        /// Lastly, it will display the new bet.
         /// </summary>
         /// <param name="game">Contains all information about the game. Is part of class Game.</param>
         /// <param name="player">Contains all information about the current player. Is part of class Player.</param>
@@ -184,7 +198,7 @@ namespace LiarsDice
 
         ///<summary>
         ///Increments the turn.
-        ///If at the end of the array, it will reset the turn count to 0.
+        ///If it reachess the end of the array, it will reset the turn count to 0.
         ///</summary>
         /// <param name="game">Contains all information about the game. Is part of class Game.</param>
         static public void increaseTurn(Game game)
@@ -201,6 +215,9 @@ namespace LiarsDice
 
         ///<summary>
         ///Continues the round after the bet has been made.
+        ///If the current player's human value is set to true, it will continue to the human function.
+        ///Otherwise, it will continue to the ai function.
+        ///After calling ai, it will call sleep.
         ///</summary>
         /// <param name="game">Contains all information about the game. Is part of class Game.</param>
         static public void continueGame(Game game)
@@ -216,6 +233,18 @@ namespace LiarsDice
             }
         }
 
+        /// <summary>
+        /// First, display's the current user's dice.
+        /// Next, it will ask the user if it wants to challenge the current bet.
+        /// If something other than y/Y/n/N is entered, it will output an error ask the user again.
+        /// If the user's answer is "y" or "Y", it will call challenge.
+        /// Otherwise, it asks the user to set a new bet with either a higher face, higher quantity, or both.
+        /// Error checking makes sure that the new bet is a higher face, higher quantity, or both. 
+        /// Error checking will also make sure the new face is between 1 and 6.
+        /// The function will then set the new betFace and betQuantity.
+        /// Then, displays the new bet.
+        /// </summary>
+        /// <param name="game"></param>
         static public void human(Game game)
         {
             //Display the current user's dice.
@@ -235,7 +264,7 @@ namespace LiarsDice
                 }
             } while (answer != "n" && answer != "y");
 
-            if (answer.Equals("Y") || answer.Equals("y"))
+            if (answer.Equals("y"))
             {
                 challenge(game);
             }
@@ -281,12 +310,20 @@ namespace LiarsDice
 
         /// <summary>
         /// The ai decides whether to increase bet or challenge the current bet using probability checks.
+        /// First, it calls probCheck with game, betQuantity, and betFace. 
+        /// If probCheck returns a number greater than or equal to 60%, it will not challenge. 
+        /// Instead, it will find which face the current player has the most of. 
+        /// If the face that it has the most of is equal to the current betFace, it will increase the current betQuantity.
+        /// If the face that it has the most of is less than the current betFace, it will set the betFace to maxNumOfOccurences, 
+        /// and will increase the betQuantity by 1.
+        /// If the face that it has the most of is greater than the current betFace, it will simply set betFace to maxNumOfOccurences.
+        /// Finally, it will display the new bet.
         /// </summary>
         /// <param name="game">Contains all information about the game. Is part of class Game.</param>
         static void ai(Game game)
         {
             //If the probability is greater than 60%, then the ai will make a new bet.
-            if (probCheck(game, game.getbetQuantity(), game.getbetFace()) > 60)
+            if (probCheck(game, game.getbetQuantity(), game.getbetFace()) >= 60)
             {
                 //Find which face current player has the most of.
                 //If the current player has equal amounts, increase the current bet?
@@ -333,6 +370,12 @@ namespace LiarsDice
 
         /// <summary>
         /// Determines the probability of the current bet.
+        /// First finds the number of betFace our current player has as the variable numFound.
+        /// Then, it will remove the numFound from our placeholder for betQuantity, r.
+        /// If the player has more of the betFace than bet, then the probability percent can be returned as 100%.
+        /// Otherwise, it will also remove the numFound from our totalDice and put it into n.
+        /// Lastly, it will call binomialDistribution with r and n converted to doubles as it's variables. 
+        /// It will return the value of binomialDistribution multiplied by 100 to get the percent.
         /// </summary>
         /// <param name="game">Contains all information about the game. Is part of class Game.</param>
         /// <param name="r">The current betQuantity.</param>
@@ -369,6 +412,11 @@ namespace LiarsDice
 
         /// <summary>
         /// Takes the binomialDistribution of r and n to find the probability (as a decimal) for the current bet.
+        /// The binomial distribution formula is: b(r; n, P) = nCr * Pr * (1 – P)^n – r
+        /// Where b = binomial probability
+        /// r = total number of "successes"
+        /// P = probability of success on an individual trail
+        /// n = number of trials.
         /// </summary>
         /// <param name="r">Number of events to obtain. This is equal to the total number of dice in the game minus the amount of said die our
         /// current player has. </param>
@@ -382,7 +430,7 @@ namespace LiarsDice
             double q = 1 - p;
             while (r < n)
             {
-                answer += C(n,r) * Math.Pow(p, r) * Math.Pow(q, (n - r));
+                answer += combination(n,r) * Math.Pow(p, r) * Math.Pow(q, (n - r));
                 r++;
             }
 
@@ -391,20 +439,25 @@ namespace LiarsDice
 
         /// <summary>
         /// Calculates the number of combinations.
+        /// The combination formula is: C(n,r)=n!/(r!(n−r)!)
+        /// Where n = objects.
+        /// and r = sample.
         /// </summary>
         /// <param name="n">Number of items in the set.</param>
         /// <param name="r">Number of items selected from the set.</param>
-        /// <returns></returns>
-        static public double C(double n, double r)
+        /// <returns>The number of combinations between two variables.</returns>
+        static public double combination(double n, double r)
         {
             return (factorial(n) / (factorial(r) * (factorial(n - r))));
         }
 
         /// <summary>
         /// Calculates the factorial
+        /// The factorial formula is: n! = n * (n-1) * ... * 1
+        /// Where n = the value given.
         /// </summary>
         /// <param name="num">The number that needs it's factorial calculated</param>
-        /// <returns>Returns the factorial</returns>
+        /// <returns>The factorial</returns>
         static public double factorial(double num)
         {
             double result = 1;
@@ -419,15 +472,21 @@ namespace LiarsDice
 
         /// <summary>
         /// Challenges the current bet. 
-        /// If the current bet is true, then the one who challenges loses a dice.
-        /// If the current bet is false, then the person who made the bet loses a dice.
-        /// If the person who loses a dice loses all of their dice, they are out of the game.
+        /// First, it displays who is challenging.
+        /// Next, it will show all of the dice. After showing one player's dice, it will include a call to nap for better viewing purposes.
+        /// It will then count each instance of betFace in each player's dice.
+        /// If there are more than or an equal amount of betFace as the betQuantity, then the one who challenged loses a die.
+        /// Otherwise, then the person who made the bet loses a dice.
+        /// Calls removeDice when someone loses a die, and displays who lost the die.
+        /// If the person who loses a dice loses all of their dice, they are out of the game and calls removePlayer.
+        /// If remove player is called, it will display that a player is out of the game.
+        /// If the player removed is the human, and there are more than one other players, it will call humanOutOfGame.
+        /// Lastly, it will calle gameEnd. If gameEnd returns true, it will stop the game completely.
+        /// Otherwise, we reset betQuantity and betFace, as well as increasing the turn. It will then call startRound.
         /// </summary>
         /// <param name="game">Contains all information about the game. Is part of class Game.</param>
         static public void challenge(Game game)
         {
-            String input = String.Empty;
-
             //Display who is challenging.
             if (game.getPlayer(game.getTurn()).isHuman())
             {
@@ -489,22 +548,7 @@ namespace LiarsDice
                     //Displays the user who is out of the game.
                     if (game.getPlayer(game.getTurn()).isHuman())
                     {
-                        Console.WriteLine("You are out of the game!\n");
-
-                        //If there is more than 1 player left after removing human player, ask if the player wants to watch 
-                        //the ai finish the game.
-                        if (game.getNumOfPlayers() - 1 > 1)
-                        {
-                            do
-                            {
-                                Console.WriteLine("Do you want to watch the rest of the game? (Y/N): ");
-                                input = Console.ReadLine().ToLower();
-                                if (input != "y" && input != "n")
-                                {
-                                    Console.WriteLine("ERROR: Input must be either Y or N, Non-case sensitive.");
-                                }
-                            } while (input != "y" && input != "n");
-                        }
+                        humanOutOfGame(game);
                     }
                     else
                     {
@@ -544,22 +588,7 @@ namespace LiarsDice
                     //Display who is out of the game.
                     if (game.getPlayer(lastPlayer).isHuman())
                     {
-                        Console.WriteLine("You are out of the game!\n");
-
-                        //If there is more than 1 player left after removing human player, ask if the player wants to watch 
-                        //the ai finish the game.
-                        if (game.getNumOfPlayers() - 1 > 1)
-                        {
-                            do
-                            {
-                                Console.WriteLine("Do you want to watch the rest of the game? (Y/N): ");
-                                input = Console.ReadLine().ToLower();
-                                if (input != "y" && input != "n")
-                                {
-                                    Console.WriteLine("ERROR: Input must be either Y or N, Non-case sensitive.");
-                                }
-                            } while (input != "y" && input != "n");
-                        }
+                        humanOutOfGame(game);
                     }
                     else
                     {
@@ -569,11 +598,6 @@ namespace LiarsDice
                     //Remove the player.
                     game.removePlayer(lastPlayer);
                 }
-            }
-
-            if (input == "n")
-            {
-                forceEnd(game);
             }
 
             //If we're not at the end of the game, we reset the betQuantity and betFace before starting a new round.
@@ -591,7 +615,7 @@ namespace LiarsDice
 
         /// <summary>
         /// If the player doesn't want to watch the rest of the game after losing, this will make the game immediately end without
-        /// seeing the outcome.
+        /// seeing the outcome by setting the numOfPlayers to -1.
         /// </summary>
         /// <param name="game">Contains all information about the game. Is part of class Game.</param>
         static public void forceEnd(Game game)
@@ -600,7 +624,43 @@ namespace LiarsDice
         }
 
         /// <summary>
-        /// Prints out the current player's dice side by side
+        /// Displays "You are out of the game." 
+        /// If there are more than 1 player left after removing the human player, it will ask if the player wants to watch the ai finish
+        /// the game.
+        /// Error checking makes sure only y/Y/n/N are entered. 
+        /// If "n" or "N" is entered, it will call forceEnd.
+        /// </summary>
+        /// <param name="game">Contains all information about the game. Is part of class Game.</param>
+        static public void humanOutOfGame(Game game)
+        {
+            String input = String.Empty;
+            Console.WriteLine("You are out of the game!\n");
+
+            //If there is more than 1 player left after removing human player, ask if the player wants to watch 
+            //the ai finish the game.
+            if (game.getNumOfPlayers() - 1 > 1)
+            {
+                do
+                {
+                    Console.WriteLine("Do you want to watch the rest of the game? (Y/N): ");
+                    input = Console.ReadLine().ToLower();
+                    if (input != "y" && input != "n")
+                    {
+                        Console.WriteLine("ERROR: Input must be either Y or N, Non-case sensitive.");
+                    }
+                } while (input != "y" && input != "n");
+
+                if (input == "n")
+                {
+                    forceEnd(game);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Prints out the current player's dice side by side.
+        /// It does this by adding each die line by line, adding to line by adding dieEmpty, dieOneEye, dieEdge, dieTwoEyes, or dieThreeEyes.
+        /// At the end, it will print each line one by one.
         /// </summary>
         /// <param name="player">Contains all information about the current player. Is part of class Player.</param>
         static public void showDice(Player player)
@@ -667,6 +727,8 @@ namespace LiarsDice
 
         /// <summary>
         /// Determines if the game has ended by checking how many players are left.
+        /// If there are more than 1 player, the game has not ended so it will return false.
+        /// If there is only 1 player left, it will return true.
         /// </summary>
         /// <param name="game">Contains all information about the game. Is part of class Game.</param>
         /// <returns>True if there is only one player left. False if there is more than one player left.</returns>

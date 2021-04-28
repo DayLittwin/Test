@@ -19,6 +19,9 @@ namespace LiarsDice
 
         /// <summary>
         /// Game constructor. Takes input num as the number of players.
+        /// It sets numOfPlayers to num, initializes the players[] array with a new Player until i reaches numOfPlayers.
+        /// Initializes betQuantity, betFace, and turn to 0.
+        /// Sets totalDice to the numOfPlayers * 5.
         /// </summary>
         /// <param name="num">The number of players.</param>
         public Game(int num)
@@ -36,6 +39,7 @@ namespace LiarsDice
 
         /// <summary>
         /// Delays the game to provide for easier viewing for the user.
+        /// It does this by putting the thread to sleep for the designated time SLEEPTIME (in ms)
         /// </summary>
         public void sleep()
         {
@@ -44,6 +48,7 @@ namespace LiarsDice
 
         /// <summary>
         /// Delays the game to provide for easier viewing, but for less time than sleep.
+        /// It does this by putting the thread to sleep for the designated time NAPTIME (in ms)
         /// </summary>
         public void nap()
         {
@@ -95,6 +100,10 @@ namespace LiarsDice
             return numOfPlayers;
         }
 
+        /// <summary>
+        /// Sets the current numOfPlayers to the num provided.
+        /// </summary>
+        /// <param name="num">The new numOfPlayers</param>
         public void setNumOfPlayers(int num)
         {
             numOfPlayers = num;
@@ -157,8 +166,14 @@ namespace LiarsDice
         }
 
         /// <summary>
-        /// Removes a player who has run out of all their dice. 
-        /// Reformats the players[] array to avoid NullPointerException
+        /// Removes a player who has run out of all their dice, ie. has 0 dice remaining.
+        /// Reformats the players[] array to avoid NullPointerException.
+        /// If the spot provided is 0, at the beginning of the array, it will move all players back one, then sets the last player 
+        /// in the array to null.
+        /// If the spot provided it numOfPlayers - 1, the end of the array, it will simply set the last player to null.
+        /// Otherwise, the spot is somewhere in the middle of the array. Therefore, it will move the players after the spot
+        /// back one and set the last player in the array to null.
+        /// Lastly, it decrements the numOfPlayers by 1.
         /// </summary>
         /// <param name="spot">The index of the Player to be removed in players[]</param>
         public void removePlayer(int spot)
