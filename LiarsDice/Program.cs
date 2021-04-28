@@ -123,7 +123,7 @@ namespace LiarsDice
             showDice(game.getPlayer(game.getTurn()));
 
             String inputbetQuantity = String.Empty, inputbetFace = String.Empty;
-            int convertedbetQuantity = 0, convertedbetFace = 0;
+            int convertedBetQuantity = 0, convertedBetFace = 0;
 
             Console.WriteLine("Please enter your new bet.");
 
@@ -133,35 +133,81 @@ namespace LiarsDice
             {
                 Console.Write("The quantity of dice in your bet: ");
                 inputbetQuantity = Console.ReadLine();
-                Int32.TryParse(inputbetQuantity, out convertedbetQuantity);
+                Int32.TryParse(inputbetQuantity, out convertedBetQuantity);
 
-                if (convertedbetQuantity <= 0)
+                if (convertedBetQuantity <= 0)
                 {
                     Console.WriteLine("ERROR: Please enter a valid integer greater than 0.");
                 }
 
-            } while (convertedbetQuantity <= 0);
+            } while (convertedBetQuantity <= 0);
 
             do
             {
                 Console.Write("The face of the dice in your bet: ");
                 inputbetFace = Console.ReadLine();
-                Int32.TryParse(inputbetFace, out convertedbetFace);
+                Int32.TryParse(inputbetFace, out convertedBetFace);
                 
-                if (convertedbetFace < 1 || convertedbetFace > 6)
+                if (convertedBetFace < 1 || convertedBetFace > 6)
                 {
                     Console.WriteLine("ERROR: Please enter a valid integer between 1 and 6 inclusively.");
                 }
 
-            } while (convertedbetFace < 1 || convertedbetFace > 6);
+            } while (convertedBetFace < 1 || convertedBetFace > 6);
 
+            setAndDisplay(game, convertedBetFace, convertedBetQuantity);
+
+        }
+
+        /// <summary>
+        /// Sets the new bet face and bet quantity, then calls display to show the new bet.
+        /// </summary>
+        /// <param name="game">Contains all information about the game. Is part of class Game.</param>
+        /// <param name="newBetFace">The new bet face to be set.</param>
+        /// <param name="newBetQuantity">The new bet quantity to be set.</param>
+        public static void setAndDisplay(Game game, int newBetFace, int newBetQuantity)
+        {
             //Set the new bet.
-            game.setbetFace(convertedbetFace);
-            game.setbetQuantity(convertedbetQuantity);
+            game.setbetFace(newBetFace);
+            game.setbetQuantity(newBetQuantity);
 
             //Display what the bet is.
-            System.Console.WriteLine("You made the bet of at least " + game.getbetQuantity() + " \"" + game.getbetFace() + "\"'s.");
+            display(game);
+        }
 
+        /// <summary>
+        /// If the current player is human, it will output "You" first.
+        /// Otherwise, it will output "Player" and it's playerNumber.
+        /// It will then output " made the bet of at least " with the betQuantity and betFace.
+        /// Lastly, it will output either a ""." if the betQuantity is only 1.
+        /// Or ""'s." if the betQuantity is greater than 1.
+        /// And writes a newLine.
+        /// </summary>
+        /// <param name="game">Contains all information about the game. Is part of class Game.</param>
+        static public void display(Game game)
+        {
+            // Display what the bet is.
+            if (game.getPlayer(game.getTurn()).isHuman())
+            {
+                System.Console.Write("You");
+            }
+            else
+            {
+                System.Console.Write("Player " + game.getPlayer(game.getTurn()).getPlayerNumber());
+            }
+
+            System.Console.Write(" made the bet of at least " + game.getbetQuantity() + " \"" + game.getbetFace());
+
+            if (game.getbetQuantity() == 1)
+            {
+                System.Console.Write("\".");
+            }
+            else
+            {
+                System.Console.Write("\"'s.");
+            }
+
+            System.Console.Write("\n");
         }
 
         /// <summary>
@@ -188,12 +234,7 @@ namespace LiarsDice
                 }
             }
 
-            //Set the new bet.
-            game.setbetFace(maxNumOfOccurences);
-            game.setbetQuantity(numOfOccurences[maxNumOfOccurences]);
-
-            //Display the new bet.
-            System.Console.WriteLine("Player " + game.getPlayer(game.getTurn()).getPlayerNumber() + " made the bet of at least " + game.getbetQuantity() + " \"" + game.getbetFace() + "\"'s.");
+            setAndDisplay(game, maxNumOfOccurences, numOfOccurences[maxNumOfOccurences]);
         }
 
         ///<summary>
@@ -271,7 +312,7 @@ namespace LiarsDice
             else
             {
                 String inputbetQuantity = String.Empty, inputbetFace = String.Empty;
-                int convertedbetQuantity = 0, convertedbetFace = 0;
+                int convertedBetQuantity = 0, convertedBetFace = 0;
 
                 Console.WriteLine("Please enter your new bet.");
 
@@ -281,29 +322,24 @@ namespace LiarsDice
                 {
                     Console.Write("The quantity of dice in your bet: ");
                     inputbetQuantity = Console.ReadLine();
-                    Int32.TryParse(inputbetQuantity, out convertedbetQuantity);
+                    Int32.TryParse(inputbetQuantity, out convertedBetQuantity);
 
                     Console.Write("The face of the dice in your bet: ");
                     inputbetFace = Console.ReadLine();
-                    Int32.TryParse(inputbetFace, out convertedbetFace);
+                    Int32.TryParse(inputbetFace, out convertedBetFace);
 
-                    if (convertedbetFace < 1 || convertedbetFace > 6)
+                    if (convertedBetFace < 1 || convertedBetFace > 6)
                     {
                         Console.WriteLine("ERROR: Please enter a valid integer between 1 and 6 inclusively.");
                     }
-                    else if (convertedbetFace <= game.getbetFace() && convertedbetQuantity <= game.getbetQuantity())
+                    else if (convertedBetFace <= game.getbetFace() && convertedBetQuantity <= game.getbetQuantity())
                     {
                         Console.WriteLine("ERROR: Increase bet num, bet amount, or both.");
                     }
 
-                } while (convertedbetFace < 1 || convertedbetFace > 6 || (convertedbetFace <= game.getbetFace() && convertedbetQuantity <= game.getbetQuantity()));
+                } while (convertedBetFace < 1 || convertedBetFace > 6 || (convertedBetFace <= game.getbetFace() && convertedBetQuantity <= game.getbetQuantity()));
 
-                //Set new bet.
-                game.setbetFace(convertedbetFace);
-                game.setbetQuantity(convertedbetQuantity);
-
-                //Display new bet.
-                System.Console.WriteLine("You made the bet of at least " + game.getbetQuantity() + " \"" + game.getbetFace() + "\"'s.");
+                setAndDisplay(game, convertedBetFace, convertedBetQuantity);
             }
 
         }
@@ -358,7 +394,7 @@ namespace LiarsDice
                 }
 
                 //Display new bet.
-                System.Console.WriteLine("Player " + game.getPlayer(game.getTurn()).getPlayerNumber() + " made the bet of at least " + game.getbetQuantity() + " \"" + game.getbetFace() + "\"'s.");
+                display(game);
             }
 
             //If the probabililty is less than 60%, then the ai will challenge.
