@@ -13,6 +13,7 @@ namespace LiarsDice
 
         /// <summary>
         /// Player constructor. Takes input num and assigns the player with the playerNumber of num.
+        /// Initializes human to false, numOfDice to 5, and each die to 0.
         /// </summary>
         /// <param name="num">Variable to be assigned to playerNum.</param>
         public Player(int num)
@@ -51,7 +52,7 @@ namespace LiarsDice
             Random rnd = new Random();
             for (int i = 0; i < 5; i++)
             {
-                dice[i] = rnd.Next(1, 6);
+                dice[i] = rnd.Next(1, 7);
             }
         }
 
