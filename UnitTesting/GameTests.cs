@@ -8,6 +8,7 @@ namespace UnitTesting
     {
         /// <summary>
         /// Verifies that the correct player gets removed
+        /// Requirements Tested: 3.2.5
         /// </summary>
         [Fact]
         public void removePlayer_Verifies_Correct_Player_Removed()

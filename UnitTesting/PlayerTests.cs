@@ -8,6 +8,7 @@ namespace UnitTesting
     {
         /// <summary>
         /// Verifies the dice are randomly set
+        /// Requirements Tested: 3.1.1
         /// </summary>
         [Fact]
         public void setDice_Verifies_Randomization()
@@ -27,6 +28,7 @@ namespace UnitTesting
 
         /// <summary>
         /// Verifies a die was successfully removed
+        /// Requirements Tested: 3.1.1
         /// </summary>
         [Fact]
         public void removeDie_Verifies_Removal()
