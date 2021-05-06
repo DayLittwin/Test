@@ -64,5 +64,26 @@ namespace UnitTesting
             Assert.Equal(expected, result);
         }
 
+        /// <summary>
+        /// Validates the computer shuts down the game properly based on number of players
+        /// Requirements Tested: 3.5.3
+        /// </summary>
+        [Fact]
+        public static void endGame_Validate_EndofGame()
+        {
+            //Arrange
+            Game game = new Game(4);
+            Game endGame = new Game(0);
+            bool expected = false;
+            bool endExpected = true;
+
+            //Act
+            bool result = DataHelper.gameEnd(game);
+            bool endResult = DataHelper.gameEnd(endGame);
+
+            //Assert
+            Assert.Equal(expected, result);
+            Assert.Equal(endExpected, endResult);
+        }
     }
 }

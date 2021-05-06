@@ -726,8 +726,7 @@ namespace LiarsDice
         /// </summary>
         /// <param name="game">Contains all information about the game. Is part of class Game.</param>
         /// <returns>True if there is only one player left. False if there is more than one player left.</returns>
-        public 
-            static bool gameEnd(Game game)
+        public static bool gameEnd(Game game)
         {
             if (game.getNumOfPlayers() > 1)
             {
