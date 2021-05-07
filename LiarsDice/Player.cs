@@ -4,7 +4,7 @@ using System.Text;
 
 namespace LiarsDice
 {
-    class Player
+    public class Player
     {
         int[] dice = new int[5];
         bool human;
@@ -13,7 +13,7 @@ namespace LiarsDice
 
         /// <summary>
         /// Player constructor. Takes input num and assigns the player with the playerNumber of num.
-        /// Initalizes human to false, numOfDice to 5, and each die to 0.
+        /// Initializes human to false, numOfDice to 5, and each die to 0.
         /// </summary>
         /// <param name="num">Variable to be assigned to playerNum.</param>
         public Player(int num)
