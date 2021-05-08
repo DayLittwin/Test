@@ -8,6 +8,13 @@ namespace LiarsDice
     {
         ///<summary>
         ///The main program for Liar's Dice
+        ///(Requirement 3.2.2)
+        ///(Requirement 3.2.3)
+        ///(Requirement 3.2.4)
+        ///(Requirement 3.4.1)
+        ///(Requirement 3.4.4)
+        ///(Requirement 3.2.1)
+        ///(Requirement 3.3.2)
         ///</summary>
         static void Main(string[] args)
         {
@@ -16,11 +23,16 @@ namespace LiarsDice
             //This part is for testing until we get the UI number from Unity 
             int num = 0;
 
+            ///(Requirement 3.2.2)
+            ///(Requirement 3.2.3)
+            ///(Requirement 3.2.4)
+            ///(Requirement 3.4.1)
+            ///(Requirement 3.4.5)
             do
             {
                 Console.WriteLine("             Welcome to Liar's Dice!" +
                     "\r\nWe will see if you have what it takes to outsmart our AI." +
-                    "\r\nTo quit the game, press control C at any time.\r\n");
+                    "\r\nTo quit the game, press control C at any time.\r\n"); ///(Requirement 3.4.5)
                 Console.WriteLine("*************************************************************");
                 Console.WriteLine("You can choose " +
                     "to play up to 3 AI." +
@@ -38,6 +50,8 @@ namespace LiarsDice
 
             Game game = new Game(num);
 
+            ///(Requirement 3.2.1)
+            ///(Requirement 3.3.2)
             //Determine who goes first by randomly assigning human.
             //Array spot 0 will go first. (EX. If human is 0, human will go first)
 
