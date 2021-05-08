@@ -8,7 +8,7 @@ namespace UnitTesting
     {
         /// <summary>
         /// Validates the algorithm that is being used returns the expected result
-        /// Requirements Tested: 3.3.2
+        /// Requirements Tested: 3.3.4 - Probability used to challenge
         /// </summary>
         [Fact]
         public static void binomialDistribution_ValidateAlgorithm()
@@ -27,7 +27,7 @@ namespace UnitTesting
 
         /// <summary>
         /// Validates the logic behind the probability and checks if probability is higher than 60% it bets.
-        /// Requirements Tested: 3.3.2
+        /// Requirements Tested: 3.3.4 - Probability used to challenge
         /// </summary>
         [Fact]
         public static void probabilityCheck_Validate_Over60()
@@ -46,7 +46,7 @@ namespace UnitTesting
         }
         /// <summary>
         /// Validates the logic behind the probability and checks if probability is lower than 60% it does not bet.
-        /// Requirements Tested: 3.3.2
+        /// Requirements Tested: 3.3.2 - Probability used to challenge
         /// </summary>
         [Fact]
         public static void probabilityCheck_Validate_Under60()
@@ -66,7 +66,7 @@ namespace UnitTesting
 
         /// <summary>
         /// Validates the computer shuts down the game properly based on number of players
-        /// Requirements Tested: 3.5.3
+        /// Requirements Tested: 3.5.3 - Game will end when there are no more players
         /// </summary>
         [Fact]
         public static void endGame_Validate_EndofGame()
