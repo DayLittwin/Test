@@ -14,7 +14,7 @@ namespace LiarsDice
         /// <summary>
         /// Player constructor. Takes input num and assigns the player with the playerNumber of num.
         /// Initializes human to false, numOfDice to 5, and each die to 0.
-        /// (Requirement 3.1.2)
+        /// (Requirement 3.1.2) Each player should be given five dice to start.
         /// </summary>
         /// <param name="num">Variable to be assigned to playerNum.</param>
         public Player(int num)
@@ -25,7 +25,7 @@ namespace LiarsDice
             }
             human = false;
 
-            ///(Requirement 3.1.2)
+            //(Requirement 3.1.2) Each player should be given five dice to start.
             numOfDice = 5;
             playerNumber = num;
         }
@@ -41,7 +41,7 @@ namespace LiarsDice
 
         /// <summary>
         /// Sets the variable human to true.
-        /// (Requirement 3.2.1)
+        /// (Requirement 3.2.1) Players will be set as Human or AI.
         /// </summary>
         public void setHuman()
         {
@@ -90,7 +90,7 @@ namespace LiarsDice
 
         /// <summary>
         /// Removes a die whenever the player loses a bet.
-        /// (Requirement 3.1.4)
+        /// (Requirement 3.1.4) Dice will be removed by computer.
         /// </summary>
         public void removeDie()
         {
