@@ -35,7 +35,7 @@ namespace LiarsDice
 
         ///<summary>
         ///Randomizes each player's dice as a face between 1 and 6, inclusively.
-        ///(Requirement 3.1.3/3.1.3.1)
+        ///(Requirement 3.1.3/3.1.3.1) Dice will be “rolled” by computer. Computer will randomly “roll” dice through randomization.
         ///</summary>
         /// <param name="game">Contains all information about the game. Is part of class Game.</param>
         static public void rollDice(Game game)
@@ -73,12 +73,12 @@ namespace LiarsDice
         ///It will bug check to make sure the entry is valid, only numerals greater than zeroand nothing outside of 6 faces.
         ///Then, it will set the current betQuantity and betFace. 
         ///Lastly, it displays the new bet.
-        ///(Requirement 3.1.1.2)
+        ///(Requirement 3.1.1.2) Dice numbers should be visible to the player after first roll.
         ///</summary>
         /// <param name="game">Contains all information about the game. Is part of class Game.</param>
         static public void humanStart(Game game)
         {
-            ///(Requirement 3.1.1.2)
+            //(Requirement 3.1.1.2) Dice numbers should be visible to the player after first roll.
             //First, display the player's dice.
             Console.WriteLine("\nYour dice.");
             showDice(game.getPlayer(game.getTurn()));
@@ -177,7 +177,7 @@ namespace LiarsDice
         /// The variable maxNumOfOccurences is the highest face of the most occurences.
         /// It will then set the new betFace to maxNumOfOccurences, and betQuantity to how many of that face were found in the player's dice.
         /// Lastly, it will display the new bet.
-        /// (Requirement 3.3.1)
+        /// (Requirement 3.3.1) AI will be bound to the same betting rules as the player.
         /// </summary>
         /// <param name="game">Contains all information about the game. Is part of class Game.</param>
         /// <param name="player">Contains all information about the current player. Is part of class Player.</param>
@@ -246,9 +246,9 @@ namespace LiarsDice
         /// Error checking will also make sure the new face is between 1 and 6.
         /// The function will then set the new betFace and betQuantity.
         /// Then, displays the new bet.
-        /// (Requirement 3.4.2)
-        /// (Requirement 3.4.3)
-        /// (Requirement 3.4.4)
+        /// (Requirement 3.4.2) Can choose ability to bet.
+        /// (Requirement 3.4.3) Can choose the amount to bet.
+        /// (Requirement 3.4.4) Ability to challenge a bet.
         /// </summary>
         /// <param name="game"></param>
         static public void human(Game game)
@@ -258,8 +258,8 @@ namespace LiarsDice
             showDice(game.getPlayer(game.getTurn()));
             String answer = String.Empty;
 
-            ///(Requirement 3.4.2)
-            ///(Requirement 3.4.4)
+            //(Requirement 3.4.2) Can choose ability to bet.
+            //(Requirement 3.4.4) Ability to challenge a bet.
             //Get answer from user.
             //Make sure the user does not input something invalid.
             do
@@ -283,7 +283,7 @@ namespace LiarsDice
 
                 Console.WriteLine("Please enter your new bet.");
 
-                ///(Requirement 3.4.3)
+                //(Requirement 3.4.3) Can choose the amount to bet.
                 //Get the new bet from the user.
                 //Make sure the user does not input an invalid entry.
                 do
@@ -322,14 +322,15 @@ namespace LiarsDice
         /// and will increase the betQuantity by 1.
         /// If the face that it has the most of is greater than the current betFace, it will simply set betFace to maxNumOfOccurences.
         /// Finally, it will display the new bet.
-        /// (Requirement 3.3.1)
-        /// (Requirement 3.3.4)
+        /// (Requirement 3.3.1) AI will be bound to the same betting rules as the player.
+        /// (Requirement 3.3.4) AI will use probability check to determine when to challenge.
         /// </summary>
         /// <param name="game">Contains all information about the game. Is part of class Game.</param>
         public static void ai(Game game)
         {
+            //(Requirement 3.3.4) AI will use probability check to determine when to challenge.
             //If the probability is greater than 60%, then the ai will make a new bet.
-            if (probCheck(game, game.getbetQuantity(), game.getbetFace()) >= 60) ///(Requirement 3.3.4)
+            if (probCheck(game, game.getbetQuantity(), game.getbetFace()) >= 60) 
             {
                 //Find which face current player has the most of.
                 //If the current player has equal amounts, increase the current bet?
@@ -489,7 +490,7 @@ namespace LiarsDice
         /// If the player removed is the human, and there are more than one other players, it will call humanOutOfGame.
         /// Lastly, it will calle gameEnd. If gameEnd returns true, it will stop the game completely.
         /// Otherwise, we reset betQuantity and betFace, as well as increasing the turn. It will then call startRound.
-        /// (Requirement 3.1.1.4)
+        /// (Requirement 3.1.1.4) Dice should be displayed after each bet is challenged.
         /// </summary>
         /// <param name="game">Contains all information about the game. Is part of class Game.</param>
         static public void challenge(Game game)
@@ -504,7 +505,7 @@ namespace LiarsDice
                 Console.WriteLine("\nPlayer " + game.getPlayer(game.getTurn()).getPlayerNumber() + " IS CHALLENGING!");
             }
 
-            ///(Requirement 3.1.1.4)
+            //(Requirement 3.1.1.4) Dice should be displayed after each bet is challenged.
             //Display every player's dice. Include a nap delay to allow the user to understand what is happening.
             for (int i = 0; i < game.getNumOfPlayers(); i++) {
                 if (game.getPlayer(i).isHuman())
@@ -624,7 +625,7 @@ namespace LiarsDice
         /// <summary>
         /// If the player doesn't want to watch the rest of the game after losing, this will make the game immediately end without
         /// seeing the outcome by setting the numOfPlayers to -1.
-        /// (Requirement 3.5.4)
+        /// (Requirement 3.4.6) The game can be forced to quit or continue if the user loses before the rest of the players.
         /// </summary>
         /// <param name="game">Contains all information about the game. Is part of class Game.</param>
         static public void forceEnd(Game game)
@@ -638,6 +639,7 @@ namespace LiarsDice
         /// the game.
         /// Error checking makes sure only y/Y/n/N are entered. 
         /// If "n" or "N" is entered, it will call forceEnd.
+        /// (Requirement 3.4.6) The game can be forced to quit or continue if the user loses before the rest of the players.
         /// </summary>
         /// <param name="game">Contains all information about the game. Is part of class Game.</param>
         static public void humanOutOfGame(Game game)
@@ -645,6 +647,7 @@ namespace LiarsDice
             String input = String.Empty;
             Console.WriteLine("You are out of the game!\n");
 
+            // (Requirement 3.4.6) The game can be forced to quit or continue if the user loses before the rest of the players.
             //If there is more than 1 player left after removing human player, ask if the player wants to watch 
             //the ai finish the game.
             if (game.getNumOfPlayers() - 1 > 1)
@@ -670,8 +673,8 @@ namespace LiarsDice
         /// Prints out the current player's dice side by side.
         /// It does this by adding each die line by line, adding to line by adding dieEmpty, dieOneEye, dieEdge, dieTwoEyes, or dieThreeEyes.
         /// At the end, it will print each line one by one.
-        /// (Requirement 3.1.1)
-        /// (Requirement 3.1.1.1)
+        /// (Requirement 3.1.1) The dice should be rendered as regular six-sided dice.
+        /// (Requirement 3.1.1.1) Dice will display in the console.
         /// </summary>
         /// <param name="player">Contains all information about the current player. Is part of class Player.</param>
         static public void showDice(Player player)
@@ -730,7 +733,7 @@ namespace LiarsDice
                 }
             }
 
-            ///(Requirements 3.1.1.1)
+            ///(Requirements 3.1.1.1) Dice will display in the console.
             Console.WriteLine(lineOne);
             Console.WriteLine(lineTwo);
             Console.WriteLine(lineThree);
@@ -742,7 +745,7 @@ namespace LiarsDice
         /// Determines if the game has ended by checking how many players are left.
         /// If there are more than 1 player, the game has not ended so it will return false.
         /// If there is only 1 player left, it will return true.
-        /// (Requirement 3.5.3)
+        /// (Requirement 3.5.3) Game will end when there are no more players.
         /// </summary>
         /// <param name="game">Contains all information about the game. Is part of class Game.</param>
         /// <returns>True if there is only one player left. False if there is more than one player left.</returns>
