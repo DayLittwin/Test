@@ -733,7 +733,7 @@ namespace LiarsDice
                 }
             }
 
-            ///(Requirements 3.1.1.1) Dice will display in the console.
+            ///(Requirement 3.1.1.1) Dice will display in the console.
             Console.WriteLine(lineOne);
             Console.WriteLine(lineTwo);
             Console.WriteLine(lineThree);
