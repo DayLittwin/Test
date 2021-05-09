@@ -174,6 +174,8 @@ namespace LiarsDice
         /// Otherwise, the spot is somewhere in the middle of the array. Therefore, it will move the players after the spot
         /// back one and set the last player in the array to null.
         /// Lastly, it decrements the numOfPlayers by 1.
+        /// (Requirement 3.2.5)	Players will be removed by computer.
+        /// (Requirement 3.3.3) AI is removed by computer.
         /// </summary>
         /// <param name="spot">The index of the Player to be removed in players[]</param>
         public void removePlayer(int spot)
